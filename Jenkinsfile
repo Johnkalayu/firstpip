@@ -1,28 +1,37 @@
 pipeline {
-    agent any
-    tools{
-        jdk {openjdk}
-        mevan {m3}
+    agent any {
+        tools (
+            jdk (env.JAVA_HOME)
+            maven (M3)
+
+        )
     }
-    stages {
-        stage{
-            step(SCM)
-            scrept{
-                ()
-            }
+    stages{
+        stage {
+            step('SCM')
+            sh 'https://github.com/Johnkalayu/firstpip.git'
+
         }
-        stage{
-            step("MAVEN BUILD")
+    }
+    stages{
+        stage {
+            step('MAVEN CLEAN INSTALL')
             sh 'mvn clean install'
 
         }
+    }
+    stages{
         stage {
             step('DOCKER BUILD')
-            sh 'docker build -t meme .'
+            sh 'docker build -t memmm .'
 
         }
+    }
+    stages{
         stage {
-            step('TESTING STAGES')
-            sh ' mvn clean test'
-            
+            step('MVN TEST')
+            sh 'mvn clean test'
         }
+    }
+}
+
