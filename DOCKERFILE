@@ -1,0 +1,4 @@
+FROM openjdk
+ARG JAR_FIEL=_target/*.jar
+COPY $(JAR_FIEL) app.jar 
+ENTRYPOINT [ "java","-jar","/app.jar"]
